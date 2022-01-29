@@ -145,9 +145,9 @@ def show_exam_result(request, course_id, submission_id):
 	grade = 0; total = 0
 	for question in course.question_set.all():
 		total += question.grade
-		if question.is_get_score(selected_ids=submission.choices.all()):
+		if question.is_get_score(selected_ids=submission.choices.filter(question=question)):
 			grade += question.grade
-	grade = grade // total * 100
+	grade = int(grade / total * 100)
 	context['grade'] = grade
 	context['course'] = course
 	context['submission'] = submission
